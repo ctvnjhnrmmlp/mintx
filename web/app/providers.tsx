@@ -31,10 +31,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <WagmiProvider config={rainbowConfig}>
       <QueryClientProvider client={query}>
         <NextThemesProvider
-          enableSystem={false}
-          disableTransitionOnChange={true}
-          defaultTheme='dark'
           attribute='class'
+          defaultTheme='system'
+          enableSystem
         >
           <RainbowKitProvider>{children}</RainbowKitProvider>
         </NextThemesProvider>

@@ -6,8 +6,8 @@ const VARIABLES = {
   stacks: '',
   words: '',
   info: '',
-  icon: '',
-  image: '',
+  icon: 'self-logo.svg',
+  image: 'self-abstract.webp',
   theme: 'dark',
   robots: 'index, follow',
 };

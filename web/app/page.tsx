@@ -9,8 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Form } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import MINTX from '@/constants/mintx';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount, useReadContract, useWriteContract } from 'wagmi';
@@ -21,7 +19,7 @@ export default function Home() {
   const { writeContract: mint } = useWriteContract();
 
   const { data: allowance } = useReadContract({
-    address: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+    address: MINTX.FUNGIBLE_ADDRESS as `0x${string}`,
     abi: MINTX.FUNGIBLE_ABI,
     functionName: 'allowance',
     args: [address, MINTX.NON_FUNGIBLE_ADDRESS],
@@ -30,7 +28,7 @@ export default function Home() {
   const handleMint = async () => {
     if (!allowance) {
       approve({
-        address: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+        address: MINTX.FUNGIBLE_ADDRESS as `0x${string}`,
         abi: MINTX.FUNGIBLE_ABI,
         functionName: 'approve',
         args: [MINTX.NON_FUNGIBLE_ADDRESS, 500],
@@ -38,31 +36,33 @@ export default function Home() {
     }
 
     mint({
-      address: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',
+      address: MINTX.NON_FUNGIBLE_ADDRESS as `0x${string}`,
       abi: MINTX.NON_FUNGIBLE_ABI,
       functionName: 'mint',
     });
   };
 
   return (
-    <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-      <section>
-        <div className='w-full max-w-5xl items-center justify-between text-sm lg:flex'>
+    <main className='bg-black'>
+      <section className='flex justify-center items-center min-h-screen outline'>
+        <div className='flex flex-col justify-center items-center h-full'>
           <div>
-            <Card>
+            <Card className='bg-black p-20 border border-zinc-700'>
               <CardHeader>
-                <CardTitle>MintX</CardTitle>
+                <CardTitle className='text-8xl font-bold text-center text-white'>
+                  MintX
+                </CardTitle>
                 <CardDescription></CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className='flex flex-col justify-center items-center gap-4'>
                 <ConnectButton />
                 {isConnected && (
-                  <button
+                  <Button
                     onClick={handleMint}
-                    className='mt-4 px-4 py-2 bg-blue-500 text-white rounded'
+                    className='px-4 py-6 bg-white text-black font-bold text-xl'
                   >
-                    Mint NFT
-                  </button>
+                    Mint Now
+                  </Button>
                 )}
               </CardContent>
               <CardFooter></CardFooter>
